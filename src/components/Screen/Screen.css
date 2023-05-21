@@ -1,0 +1,27 @@
+.screen {
+    height: 150px;
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    color: #525252;
+    font-weight: bold;
+    box-sizing: border-box;
+    background: #F8F8F8;
+    border-radius: 20px;
+    text-align: end;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.equation {
+    color: #AEAEAE;
+    font-size: 20px;
+    margin: 0;
+}
+
+.value {
+    font-size: 50px;
+    margin: 0;
+}

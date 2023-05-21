@@ -1,0 +1,26 @@
+button {
+    border: none;
+    background: #FFFFFF;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(192, 192, 192, 0.1);
+    border-radius: 20px;
+    color: #AEAEAE;
+}
+
+.action {
+    background: #F4F9FF;
+    color: #789FD9;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(134, 197, 255, 0.2);
+}
+
+.operator {
+    background: #789FD9;
+    color: #FFFFFF;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(134, 197, 255, 0.2);
+}
+
+.zero {
+    grid-column: 1 / 3;
+}

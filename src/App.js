@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import Wrapper from "./components/Wrapper/Wrapper";
+import Screen from "./components/Screen/Screen";
+import ButtonBox from "./components/ButtonBox/ButtonBox";
+import Button from "./components/Button/Button";
 
-function App() {
+const btnValues = [
+  [{value: "C", class: "action"}, {value: "+/-", class: "action"}, {value: "%", class: "action"}, {value: "%", class: "operator"}],
+  [{value: "7", class: ""}, {value: "8", class: ""}, {value: "9", class: ""}, {value: "X", class: "operator"}],
+  [{value: "4", class: ""}, {value: "5", class: ""}, {value: "6", class: ""}, {value: "-", class: "operator"}],
+  [{value: "1", class: ""}, {value: "2", class: ""}, {value: "3", class: ""}, {value: "+", class: "operator"}],
+  [{value: "0", class: "zero"}, {value: ".", class: ""}, {value: "=", class: "operator"}],
+];
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper>
+      <Screen value="0" equation="" />
+      <ButtonBox>
+        {
+          btnValues.flat().map((btn, i) => {
+            return (
+              <Button
+                key={i}
+                className={btn.class}
+                value={btn.value}
+                onClick={() => {
+                  console.log(`${btn} clicked!`);
+                }}
+              />
+            );
+          })
+        }
+      </ButtonBox>
+    </Wrapper>
   );
-}
+};
 
 export default App;
