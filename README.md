@@ -6,8 +6,6 @@
 ## Built with
 * [React JS](https://reactjs.org/)
 
-## Author
-* Jarvis Tse
 ## Available Scripts
 
 In the project directory, you can run:
