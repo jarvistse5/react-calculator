@@ -25,3 +25,26 @@
     font-size: 50px;
     margin: 0;
 }
+
+.darkScreen {
+    height: 150px;
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    color: #FFFFFF;
+    font-weight: bold;
+    box-sizing: border-box;
+    background: #343434;
+    border-radius: 20px;
+    text-align: end;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.darkScreen.equation {
+    color: #747474;
+    font-size: 20px;
+    margin: 0;
+}

@@ -1,7 +1,7 @@
 import "./Wrapper.css";
 
-const Wrapper = ({ children }) => {
-  return <div className="wrapper">{children}</div>;
+const Wrapper = ({ className, children }) => {
+  return <div className={className}>{children}</div>;
 };
 
 export default Wrapper;

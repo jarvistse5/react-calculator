@@ -2,10 +2,12 @@ import Wrapper from "./components/Wrapper/Wrapper";
 import Screen from "./components/Screen/Screen";
 import ButtonBox from "./components/ButtonBox/ButtonBox";
 import Button from "./components/Button/Button";
+import Header from "./components/Header/Header";
 import React, { useState } from "react";
 
 const App = () => {
 
+  let [darkmode, setDarkmode] = useState(false);
   let [calc, setCalc] = useState({
     num1: null,
     sign: "",
@@ -14,6 +16,10 @@ const App = () => {
     ans: 0,
     reset: 0,
   });
+
+  const switchDarkmode = () => {
+    setDarkmode(!darkmode);
+  }
 
   const calcalate = (num1, num2, sign) => {
     if (num1 !== null && num1.toString().includes('%')) {
@@ -254,34 +260,35 @@ const App = () => {
       {value: "/", class: "operator", click: signClickHandler}
     ],
     [
-      {value: 7, class: "", click: numClickHandler}, 
-      {value: 8, class: "", click: numClickHandler}, 
-      {value: 9, class: "", click: numClickHandler}, 
+      {value: 7, class: "number", click: numClickHandler}, 
+      {value: 8, class: "number", click: numClickHandler}, 
+      {value: 9, class: "number", click: numClickHandler}, 
       {value: "x", class: "operator", click: signClickHandler}
     ],
     [
-      {value: 4, class: "", click: numClickHandler}, 
-      {value: 5, class: "", click: numClickHandler}, 
-      {value: 6, class: "", click: numClickHandler}, 
+      {value: 4, class: "number", click: numClickHandler}, 
+      {value: 5, class: "number", click: numClickHandler}, 
+      {value: 6, class: "number", click: numClickHandler}, 
       {value: "-", class: "operator", click: signClickHandler}
     ],
     [
-      {value: 1, class: "", click: numClickHandler}, 
-      {value: 2, class: "", click: numClickHandler}, 
-      {value: 3, class: "", click: numClickHandler}, 
+      {value: 1, class: "number", click: numClickHandler}, 
+      {value: 2, class: "number", click: numClickHandler}, 
+      {value: 3, class: "number", click: numClickHandler}, 
       {value: "+", class: "operator", click: signClickHandler}
     ],
     [
-      {value: 0, class: "zero", click: numClickHandler}, 
-      {value: ".", class: "", click: dotClickHandler}, 
+      {value: 0, class: "zero number", click: numClickHandler}, 
+      {value: ".", class: "number", click: dotClickHandler}, 
       {value: "=", class: "operator", click: equalClickHandler}
     ],
   ];
 
 
   return (
-    <Wrapper>
-      <Screen value={calc.ans} equation={calc.equation} />
+    <Wrapper className={darkmode ? 'wrapper darkmode' : 'wrapper'}>
+      <Header darkmode={darkmode} onClick={switchDarkmode}></Header>
+      <Screen darkmode={darkmode} value={calc.ans} equation={calc.equation} />
       <ButtonBox>
         {
           btnValues.flat().map((btn, i) => {
@@ -291,6 +298,7 @@ const App = () => {
                 className={btn.class}
                 value={btn.value}
                 onClick={btn.click}
+                darkmode={darkmode}
               />
             );
           })

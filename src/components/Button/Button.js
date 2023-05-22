@@ -1,8 +1,8 @@
 import "./Button.css";
 
-const Button = ({ className, value, onClick }) => {
+const Button = ({ darkmode, className, value, onClick }) => {
   return (
-    <button className={className} onClick={onClick}>
+    <button className={[darkmode ? className + ' darkmodeBtn' : className]} onClick={onClick}>
       {value}
     </button>
   );
