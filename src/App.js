@@ -106,6 +106,31 @@ const App = () => {
     });
   }
 
+  const dotClickHandler = (e) => {
+    e.preventDefault();
+
+    if (calc.sign) {
+      if (calc.num2 === null || !calc.num2.toString().includes(".")) {
+        let newNum2 = calc.num2 === null ? "0." : calc.num2 + '.';
+        setCalc({
+          ...calc,
+          num2: newNum2,
+          equation: calc.num1 + ' ' + calc.sign + ' ' + newNum2,
+        });
+      }
+    } else {
+      if (calc.num1 === null || !calc.num1.toString().includes(".")) {
+        let newNum1 = calc.num1 === null ? "0." : calc.num1 + '.';
+        setCalc({
+          ...calc,
+          num1: newNum1,
+          equation: newNum1,
+          reset: 0,
+        });
+      }
+    }
+  }
+
   const equalClickHandler = (e) => {
       e.preventDefault();
 
@@ -154,7 +179,7 @@ const App = () => {
     ],
     [
       {value: 0, class: "zero", click: numClickHandler}, 
-      {value: ".", class: ""}, 
+      {value: ".", class: "", click: dotClickHandler}, 
       {value: "=", class: "operator", click: equalClickHandler}
     ],
   ];
