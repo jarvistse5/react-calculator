@@ -16,6 +16,18 @@ const App = () => {
   });
 
   const calcalate = (num1, num2, sign) => {
+    console.log({
+      'num1': num1,
+      'num2': num2
+    })
+
+    if (num1 !== null && num1.toString().includes('%')) {
+      num1 = Number(num1.toString().replace('%', '')) / Math.pow(100, 1);
+    }
+    if (num2 !== null && num2.toString().includes('%')) {
+      num2 = Number(num2.toString().replace('%', '')) / Math.pow(100, 1);
+    }
+
     if (num1 !== null && num2 !== null && sign) {
       if (sign === '+') {
         return Number(num1) + Number(num2);
@@ -37,7 +49,7 @@ const App = () => {
   const numClickHandler = (e) => {
     e.preventDefault();
     const value = e.target.innerHTML;
-    console.log(calc);
+
     if (calc.reset) {
       setCalc({
         num1: value,
@@ -47,13 +59,22 @@ const App = () => {
         ans: calc.ans,
         reset: 0,
       });
+    } else if (calc.sign === '') {
+      if (calc.num1 === null || !calc.num1.toString().includes('%')) {
+        setCalc({
+          ...calc,
+          num1: calc.num1 === null ? value : calc.num1 += value,
+          equation: calc.equation += value,
+        });
+      }
     } else {
-      setCalc({
-        ...calc,
-        num1: calc.sign === '' ? (calc.num1 === null ? value : calc.num1 += value) : calc.num1,
-        num2: calc.sign !== '' ? (calc.num2 === null ? value : calc.num2 += value) : calc.num2,
-        equation: calc.equation += value,
-      });
+      if (calc.num2 === null || !calc.num2.toString().includes('%')) {
+        setCalc({
+          ...calc,
+          num2: calc.num2 === null ? value : calc.num2 += value,
+          equation: calc.equation += value,
+        });
+      }
     }
   }
 
@@ -110,7 +131,7 @@ const App = () => {
     e.preventDefault();
 
     if (calc.sign) {
-      if (calc.num2 === null || !calc.num2.toString().includes(".")) {
+      if (calc.num2 === null || (!calc.num2.toString().includes(".") && !calc.num2.toString().includes("%"))) {
         let newNum2 = calc.num2 === null ? "0." : calc.num2 + '.';
         setCalc({
           ...calc,
@@ -119,7 +140,7 @@ const App = () => {
         });
       }
     } else {
-      if (calc.num1 === null || !calc.num1.toString().includes(".")) {
+      if (calc.num1 === null || (!calc.num1.toString().includes(".") && !calc.num1.toString().includes("%"))) {
         let newNum1 = calc.num1 === null ? "0." : calc.num1 + '.';
         setCalc({
           ...calc,
@@ -131,32 +152,57 @@ const App = () => {
     }
   }
 
-  const equalClickHandler = (e) => {
-      e.preventDefault();
+  const percentClickHandler = (e) => {
+    e.preventDefault();
 
-      let ans = calcalate(calc.num1, calc.num2, calc.sign)
-      if (calc.num1 !== null && calc.num2 !== null && calc.sign) {
+    if (calc.sign) {
+      if (calc.num2 === null || !calc.num2.toString().includes("%")) {
+        let newNum2 = calc.num2 === null ? '0%' : calc.num2 + '%';
         setCalc({
           ...calc,
-          num1: null,
-          num2: null,
-          sign: "",
-          ans: ans,
-          reset: 1,
-        });
-      } else if (calc.num1 !== null) {
-        setCalc({
-          ...calc,
-          ans: ans,
+          num2: newNum2,
+          equation: calc.num1 + ' ' + calc.sign + ' ' + newNum2,
         });
       }
+    } else {
+      if (calc.num1 === null || !calc.num1.toString().includes("%")) {
+        let newNum1 = calc.num1 === null ? calc.ans + '%' : calc.num1 + '%';
+        setCalc({
+          ...calc,
+          num1: newNum1,
+          equation: newNum1,
+          reset: 0,
+        });
+      }
+    }
+  }
+
+  const equalClickHandler = (e) => {
+    e.preventDefault();
+
+    let ans = calcalate(calc.num1, calc.num2, calc.sign)
+    if (calc.num1 !== null && calc.num2 !== null && calc.sign) {
+      setCalc({
+        ...calc,
+        num1: null,
+        num2: null,
+        sign: "",
+        ans: ans,
+        reset: 1,
+      });
+    } else if (calc.num1 !== null) {
+      setCalc({
+        ...calc,
+        ans: ans,
+      });
+    }
   }
 
   const btnValues = [
     [
       {value: "C", class: "action", click: resetClickHandler},
       {value: "+/-", class: "action"},
-      {value: "%", class: "action"},
+      {value: "%", class: "action", click: percentClickHandler},
       {value: "/", class: "operator", click: signClickHandler}
     ],
     [
