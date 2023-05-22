@@ -1,7 +1,7 @@
 # Simple Calculator with ReactJS
 ## Screenshot
-![Lightmode screenshot](./src/assets/calculator_light.png)
-![Darkmode screenshot](./src/assets/calculator_dark.png)
+<img src="./src/assets/calculator_light.png" width="200" height="350" alt="Lightmode screenshot">
+<img src="./src/assets/calculator_dark.png" width="200" height="350" alt="Darkmode screenshot">
 
 ## Built with
 * [React JS](https://reactjs.org/)
