@@ -16,11 +16,6 @@ const App = () => {
   });
 
   const calcalate = (num1, num2, sign) => {
-    console.log({
-      'num1': num1,
-      'num2': num2
-    })
-
     if (num1 !== null && num1.toString().includes('%')) {
       num1 = Number(num1.toString().replace('%', '')) / Math.pow(100, 1);
     }
@@ -46,6 +41,16 @@ const App = () => {
     }
   }
 
+  const displayNum2 = (num2) => {
+    let display = 0;
+    if (num2.toString().includes('-')) {
+      display = '(' + num2 + ')';
+    } else {
+      display = num2;
+    }
+    return display;
+  }
+
   const numClickHandler = (e) => {
     e.preventDefault();
     const value = e.target.innerHTML;
@@ -61,18 +66,28 @@ const App = () => {
       });
     } else if (calc.sign === '') {
       if (calc.num1 === null || !calc.num1.toString().includes('%')) {
+        let newNum1 = calc.num1 === null ? value : (
+          calc.num1 === '-0' ? '-' + value : (
+            calc.num1 === '0' ? value : calc.num1 + value
+          )
+        );
         setCalc({
           ...calc,
-          num1: calc.num1 === null ? value : calc.num1 += value,
-          equation: calc.equation += value,
+          num1: newNum1,
+          equation: newNum1,
         });
       }
     } else {
       if (calc.num2 === null || !calc.num2.toString().includes('%')) {
+        let newNum2 = calc.num2 === null ? value : (
+          calc.num2 === '-0' ? '-' + value : (
+            calc.num2 === '0' ? value : calc.num2 + value
+          )
+        );
         setCalc({
           ...calc,
-          num2: calc.num2 === null ? value : calc.num2 += value,
-          equation: calc.equation += value,
+          num2: newNum2,
+          equation: calc.num1 + ' ' + calc.sign + ' ' + displayNum2(newNum2),
         });
       }
     }
@@ -136,7 +151,7 @@ const App = () => {
         setCalc({
           ...calc,
           num2: newNum2,
-          equation: calc.num1 + ' ' + calc.sign + ' ' + newNum2,
+          equation: calc.num1 + ' ' + calc.sign + ' ' + displayNum2(newNum2),
         });
       }
     } else {
@@ -161,7 +176,7 @@ const App = () => {
         setCalc({
           ...calc,
           num2: newNum2,
-          equation: calc.num1 + ' ' + calc.sign + ' ' + newNum2,
+          equation: calc.num1 + ' ' + calc.sign + ' ' + displayNum2(newNum2),
         });
       }
     } else {
@@ -174,6 +189,39 @@ const App = () => {
           reset: 0,
         });
       }
+    }
+  }
+
+  const invertClickHandler = (e) => {
+    e.preventDefault();
+
+    if (calc.sign === '') {
+      let newNum1 = calc.num1 === null ? '-' + calc.ans : (
+        calc.num1.toString().includes('-') ? 
+        calc.num1.toString().replace('-', '') : 
+        '-' + calc.num1
+      );
+      setCalc({
+        ...calc,
+        num1: newNum1,
+        equation: newNum1,
+        reset: 0,
+      });
+    } else {
+      let newNum2 = 0;
+      if (calc.num2 === null) {
+        newNum2 = '-' + 0;
+      } else if (calc.num2.toString().includes('-')) {
+        newNum2 = calc.num2.toString().replace('-', '');
+      } else {
+        newNum2 = '-' + calc.num2;
+      }
+
+      setCalc({
+        ...calc,
+        num2: newNum2,
+        equation: calc.num1 + ' ' + calc.sign + ' ' + displayNum2(newNum2),
+      });
     }
   }
 
@@ -201,7 +249,7 @@ const App = () => {
   const btnValues = [
     [
       {value: "C", class: "action", click: resetClickHandler},
-      {value: "+/-", class: "action"},
+      {value: "+/-", class: "action", click: invertClickHandler},
       {value: "%", class: "action", click: percentClickHandler},
       {value: "/", class: "operator", click: signClickHandler}
     ],
