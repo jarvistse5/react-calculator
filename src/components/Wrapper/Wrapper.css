@@ -6,6 +6,10 @@
     background-color: #FFFFFF;
 }
 
-.darkmode {
+.theme-light {
+    background-color: #FFFFFF;
+}
+
+.theme-dark {
     background-color: #1E1E1E;
 }

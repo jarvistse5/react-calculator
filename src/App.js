@@ -3,11 +3,13 @@ import Screen from "./components/Screen/Screen";
 import ButtonBox from "./components/ButtonBox/ButtonBox";
 import Button from "./components/Button/Button";
 import Header from "./components/Header/Header";
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
+
+export const ThemeContext = createContext();
 
 const App = () => {
-
   let [darkmode, setDarkmode] = useState(false);
+  let [theme, setTheme] = useState('light');
   let [calc, setCalc] = useState({
     num1: null,
     sign: "",
@@ -17,8 +19,12 @@ const App = () => {
     reset: 0,
   });
 
-  const switchDarkmode = () => {
-    setDarkmode(!darkmode);
+  const switchTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
   }
 
   const calcalate = (num1, num2, sign) => {
@@ -286,25 +292,26 @@ const App = () => {
 
 
   return (
-    <Wrapper className={darkmode ? 'wrapper darkmode' : 'wrapper'}>
-      <Header darkmode={darkmode} onClick={switchDarkmode}></Header>
-      <Screen darkmode={darkmode} value={calc.ans} equation={calc.equation} />
-      <ButtonBox>
-        {
-          btnValues.flat().map((btn, i) => {
-            return (
-              <Button
-                key={i}
-                className={btn.class}
-                value={btn.value}
-                onClick={btn.click}
-                darkmode={darkmode}
-              />
-            );
-          })
-        }
-      </ButtonBox>
-    </Wrapper>
+    <ThemeContext.Provider value={theme}>
+      <Wrapper>
+        <Header onClick={switchTheme}></Header>
+        <Screen darkmode={darkmode} value={calc.ans} equation={calc.equation} />
+        <ButtonBox>
+          {
+            btnValues.flat().map((btn, i) => {
+              return (
+                <Button
+                  key={i}
+                  className={btn.class}
+                  value={btn.value}
+                  onClick={btn.click}
+                />
+              );
+            })
+          }
+        </ButtonBox>
+      </Wrapper>
+    </ThemeContext.Provider>
   );
 };
 

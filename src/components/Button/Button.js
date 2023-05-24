@@ -1,8 +1,11 @@
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
 import "./Button.css";
 
-const Button = ({ darkmode, className, value, onClick }) => {
+const Button = ({ className, value, onClick }) => {
+  const theme = useContext(ThemeContext);
   return (
-    <button className={[darkmode ? className + ' darkmodeBtn' : className]} onClick={onClick}>
+    <button className={`${className} theme-${theme}`} onClick={onClick}>
       {value}
     </button>
   );
